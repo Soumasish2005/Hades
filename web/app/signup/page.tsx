@@ -2,45 +2,14 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, Github, Eye, EyeOff, CheckCircle } from 'lucide-react';
+import { ArrowLeft, Github } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Checkbox } from '@/components/ui/checkbox';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { loginWithGoogle, loginWithGitHub } from '@/lib/actions/auth';
 
 export default function SignUp() {
-  const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    company: '',
-    agreeToTerms: false
-  });
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-    setError('');
-
-    try {
-      // Handle sign up logic here
-      console.log('Sign up:', formData);
-      // You would typically call your signup API here
-    } catch (error) {
-      setError('Registration failed. Please try again.');
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleInputChange = (field: string, value: string | boolean) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
-  };
 
   const handleGoogleSignUp = async () => {
     setIsLoading(true);
@@ -62,15 +31,8 @@ export default function SignUp() {
     }
   };
 
-  const passwordRequirements = [
-    { met: formData.password.length >= 8, text: 'At least 8 characters' },
-    { met: /[A-Z]/.test(formData.password), text: 'One uppercase letter' },
-    { met: /[0-9]/.test(formData.password), text: 'One number' },
-    { met: /[^A-Za-z0-9]/.test(formData.password), text: 'One special character' }
-  ];
-
   return (
-    <div className="min-h-screen section-bg flex items-center justify-center p-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-4">
       <div className="w-full max-w-md">
         {/* Back Button */}
         <Link 
@@ -81,12 +43,10 @@ export default function SignUp() {
           Back to Home
         </Link>
 
+        {/* Signup Card */}
         <Card className="bg-slate-900/70 backdrop-blur-sm border-blue-400/40">
           <CardHeader className="text-center">
-            <CardTitle className="text-2xl cyber-text">Initialize Access</CardTitle>
-            <CardDescription className="text-blue-100">
-              Create your Hades operator account
-            </CardDescription>
+            <CardTitle className="text-2xl cyber-text">Sign Up</CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
             {error && (
@@ -121,128 +81,6 @@ export default function SignUp() {
                 Continue with GitHub
               </Button>
             </div>
-
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-blue-400/40"></div>
-              </div>
-              <div className="relative flex justify-center text-xs uppercase">
-                <span className="bg-slate-900 px-2 text-blue-200">Or continue with</span>
-              </div>
-            </div>
-
-            {/* Registration Form */}
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="name" className="text-blue-100">Full Name</Label>
-                  <Input
-                    id="name"
-                    type="text"
-                    placeholder="John Doe"
-                    value={formData.name}
-                    onChange={(e) => handleInputChange('name', e.target.value)}
-                    className="bg-slate-900/50 border-blue-400/40 text-white placeholder-blue-300/50 focus:border-blue-300"
-                    required
-                    disabled={isLoading}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="company" className="text-blue-100">Company</Label>
-                  <Input
-                    id="company"
-                    type="text"
-                    placeholder="Acme Corp"
-                    value={formData.company}
-                    onChange={(e) => handleInputChange('company', e.target.value)}
-                    className="bg-slate-900/50 border-blue-400/40 text-white placeholder-blue-300/50 focus:border-blue-300"
-                    disabled={isLoading}
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="email" className="text-blue-100">Email</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="john@example.com"
-                  value={formData.email}
-                  onChange={(e) => handleInputChange('email', e.target.value)}
-                  className="bg-slate-900/50 border-blue-400/40 text-white placeholder-blue-300/50 focus:border-blue-300"
-                  required
-                  disabled={isLoading}
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="password" className="text-blue-100">Password</Label>
-                <div className="relative">
-                  <Input
-                    id="password"
-                    type={showPassword ? 'text' : 'password'}
-                    placeholder="Create a strong password"
-                    value={formData.password}
-                    onChange={(e) => handleInputChange('password', e.target.value)}
-                    className="bg-slate-900/50 border-blue-400/40 text-white placeholder-blue-300/50 focus:border-blue-300 pr-10"
-                    required
-                    disabled={isLoading}
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-blue-300 hover:text-blue-200"
-                    disabled={isLoading}
-                  >
-                    {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                  </button>
-                </div>
-
-                {/* Password Requirements */}
-                {formData.password && (
-                  <div className="space-y-2 mt-2">
-                    {passwordRequirements.map((req, index) => (
-                      <div key={index} className="flex items-center space-x-2">
-                        <CheckCircle 
-                          className={`h-4 w-4 ${req.met ? 'text-blue-300' : 'text-blue-500/50'}`} 
-                        />
-                        <span className={`text-xs ${req.met ? 'text-blue-200' : 'text-blue-400/70'}`}>
-                          {req.text}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-
-              <div className="flex items-center space-x-2">
-                <Checkbox
-                  id="terms"
-                  checked={formData.agreeToTerms}
-                  onCheckedChange={(checked) => handleInputChange('agreeToTerms', checked as boolean)}
-                  className="border-blue-400/50 data-[state=checked]:bg-blue-500 data-[state=checked]:border-blue-500"
-                  disabled={isLoading}
-                />
-                <Label htmlFor="terms" className="text-sm text-blue-100">
-                  I agree to the{' '}
-                  <Link href="/terms" className="text-blue-200 hover:text-blue-100">
-                    Terms of Service
-                  </Link>{' '}
-                  and{' '}
-                  <Link href="/privacy" className="text-blue-200 hover:text-blue-100">
-                    Privacy Policy
-                  </Link>
-                </Label>
-              </div>
-
-              <Button 
-                type="submit" 
-                className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold border-0"
-                disabled={!formData.agreeToTerms || isLoading}
-              >
-                {isLoading ? 'Initializing...' : 'Initialize Account'}
-              </Button>
-            </form>
 
             <div className="text-center">
               <span className="text-blue-200">Already have an account? </span>

@@ -1,18 +1,28 @@
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
-import Features from '@/components/Features';
-import UseCases from '@/components/UseCases';
-import TechnicalBenefits from '@/components/TechnicalBenefits';
+import StatsSection from '@/components/StatsSection';
+import TrustSection from '@/components/TrustSection';
+import IndustriesSection from '@/components/IndustriesSection';
+import ProtectionSection from '@/components/ProtectionSection';
+import FAQSection from '@/components/FAQSection';
+import PricingSection from '@/components/PricingSection';
+import TestimonialsSection from '@/components/TestimonialsSection';
+import CTASection from '@/components/CTASection';
 import Footer from '@/components/Footer';
 
 export default function Home() {
   return (
-    <main className="min-h-screen section-bg">
+    <main className="min-h-screen">
       <Navbar />
       <Hero />
-      <Features />
-      <UseCases />
-      <TechnicalBenefits />
+      <StatsSection />
+      <TrustSection />
+      <IndustriesSection />
+      <ProtectionSection />
+      <FAQSection />
+      <PricingSection />
+      <TestimonialsSection />
+      <CTASection />
       <Footer />
     </main>
   );
