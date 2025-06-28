@@ -2,7 +2,8 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { Menu, X, Shield } from 'lucide-react';
+import Image from 'next/image'; // Import Image for the logo
+import { Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 export default function Navbar() {
@@ -11,15 +12,17 @@ export default function Navbar() {
   const toggleMenu = () => setIsOpen(!isOpen);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-md border-b border-gray-800">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-slate-900/80 backdrop-blur-md border-b border-gray-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2 group">
-            <Shield className="h-8 w-8 text-purple-400 group-hover:text-purple-300 transition-colors" />
-            <span className="text-xl font-bold text-white group-hover:text-purple-300 transition-colors">
-              Hades
-            </span>
+            <Image
+              src="/logo-h.png"
+              alt="Hades Logo"
+              width={140}
+              height={48}
+            />
           </Link>
 
           {/* Desktop Navigation */}
@@ -63,7 +66,7 @@ export default function Navbar() {
 
         {/* Mobile Menu */}
         {isOpen && (
-          <div className="md:hidden absolute top-full left-0 right-0 bg-slate-900/95 backdrop-blur-md border-b border-gray-800">
+          <div className="md:hidden absolute top-full left-0 right-0 bg-slate-900/80 backdrop-blur-md border-b border-gray-800">
             <div className="px-4 py-6 space-y-4">
               <Link 
                 href="#features" 

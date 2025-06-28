@@ -1,17 +1,6 @@
 import './globals.css';
 import type { Metadata } from 'next';
-import { Inter, JetBrains_Mono } from 'next/font/google';
 import AuthSessionProvider from '@/components/providers/SessionProvider';
-
-const inter = Inter({ 
-  subsets: ['latin'],
-  variable: '--font-inter',
-});
-
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ['latin'],
-  variable: '--font-jetbrains-mono',
-});
 
 export const metadata: Metadata = {
   title: 'Hades - AI-Powered Cybersecurity Agent',
@@ -25,7 +14,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} ${jetbrainsMono.variable} font-sans`}>
+      <head></head>
+      <body className="font-libertinus">
         <AuthSessionProvider>
           {children}
         </AuthSessionProvider>

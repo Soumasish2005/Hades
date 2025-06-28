@@ -27,14 +27,14 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="relative pt-32 pb-24 px-4 sm:px-6 lg:px-8 overflow-hidden">
+    <section className="relative pt-40 pb-24 px-4 sm:px-6 lg:px-8 overflow-hidden">
       {/* Purple glow effect */}
       <div className="absolute top-1/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-purple-500/20 rounded-full blur-3xl" />
       
-      <div className="relative max-w-4xl mx-auto text-center">
+      <div className="relative max-w-4xl mx-auto text-center mt-8">
         {/* Main Heading */}
         <h1 className={`text-5xl sm:text-6xl lg:text-7xl font-bold mb-8 leading-tight transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-          <span className="text-white">Your Digital Safety Net,</span>
+          <span className="text-white">Your Hacking tasks,</span>
           <br />
           <span className="text-white">on </span>
           <span className="bg-gradient-to-r from-purple-400 to-blue-500 bg-clip-text text-transparent">
@@ -58,17 +58,6 @@ export default function Hero() {
             <Play className="mr-2 h-5 w-5" />
             Watch Demo
           </Button>
-        </div>
-
-        {/* Company Logos */}
-        <div className={`mb-20 transition-all duration-1000 delay-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-          <div className="flex items-center justify-center space-x-12 opacity-50">
-            {['Microsoft', 'Google', 'Amazon', 'Meta', 'Apple'].map((company, index) => (
-              <div key={index} className="text-gray-400 font-medium text-lg">
-                {company}
-              </div>
-            ))}
-          </div>
         </div>
 
         {/* Terminal Demo - Keep the Hades typewriter effect */}

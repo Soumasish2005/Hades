@@ -504,7 +504,9 @@ export default function Dashboard() {
                           onChange={(e) => setNewKeyName(e.target.value)}
                           className="bg-slate-900/50 border-purple-400/40 text-white placeholder-purple-300/50"
                         />
+                        <label htmlFor="api-key-type" className="sr-only">API Key Type</label>
                         <select
+                          id="api-key-type"
                           value={newKeyType}
                           onChange={(e) => setNewKeyType(e.target.value as 'hades' | 'gemini')}
                           className="bg-slate-900/50 border border-purple-400/40 text-white rounded-md px-3 py-2"
@@ -686,7 +688,7 @@ export default function Dashboard() {
                     <div className="flex items-center justify-between">
                       <div>
                         <h4 className="text-green-400 font-medium mb-2">New API Key Generated</h4>
-                        <p className="text-green-200 text-sm mb-2">Save this key securely - you won't be able to see it again!</p>
+                        <p className="text-green-200 text-sm mb-2">Save this key securely - you won&apos;t be able to see it again!</p>
                         <code className="text-green-300 bg-slate-950/50 px-3 py-1 rounded text-sm">{generatedKey}</code>
                       </div>
                       <Button 
@@ -770,7 +772,7 @@ export default function Dashboard() {
                       <p className="text-purple-300 text-sm mb-2">Hades API:</p>
                       <div className="bg-slate-950/80 rounded p-3 border border-purple-400/30">
                         <code className="text-purple-300 text-xs">
-                          curl -H "Authorization: Bearer YOUR_HADES_KEY" https://api.hades.security/v1/scan
+                          curl -H &quot;Authorization: Bearer YOUR_HADES_KEY&quot; https://api.hades.security/v1/scan
                         </code>
                       </div>
                     </div>
@@ -778,7 +780,7 @@ export default function Dashboard() {
                       <p className="text-blue-300 text-sm mb-2">Gemini API:</p>
                       <div className="bg-slate-950/80 rounded p-3 border border-blue-400/30">
                         <code className="text-blue-300 text-xs">
-                          curl -H "Authorization: Bearer YOUR_GEMINI_KEY" https://generativelanguage.googleapis.com/v1/models
+                          curl -H &quot;Authorization: Bearer YOUR_GEMINI_KEY&quot; https://generativelanguage.googleapis.com/v1/models
                         </code>
                       </div>
                     </div>
