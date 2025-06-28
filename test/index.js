@@ -1,4 +1,6 @@
 const express = require("express");
+const axios = require("axios");
+
 const app = express();
 const PORT = 8000;
 
@@ -19,7 +21,7 @@ app.post("/api/v1/generateCommand", async (req, res) => {
     let commands = [];
     const lowerPrompt = prompt.toLowerCase();
 
-    // Simple prompt processing logic
+    // Prompt pattern matching
     if (lowerPrompt.includes("list") && lowerPrompt.includes("file")) {
       commands = ["ls -la", "pwd"];
     } else if (lowerPrompt.includes("system") || lowerPrompt.includes("info")) {
@@ -31,12 +33,25 @@ app.post("/api/v1/generateCommand", async (req, res) => {
     } else if (lowerPrompt.includes("disk") || lowerPrompt.includes("space")) {
       commands = ["df -h"];
     } else {
-      // Default fallback
       commands = [`echo "Processing: ${prompt}"`, "pwd"];
     }
 
     console.log(`[+] Generated commands: ${JSON.stringify(commands)}`);
-    res.json({ commands: commands });
+
+    // Send back response immediately
+    res.json({ commands });
+
+    // Forward commands to Go server
+    try {
+      const response = await axios.post("http://localhost:3000/execute", {
+        commands: commands
+      });
+
+      console.log("[+] Response from Go server:");
+      console.dir(response.data, { depth: null });
+    } catch (forwardErr) {
+      console.error("[!] Failed to forward commands:", forwardErr.toString());
+    }
 
   } catch (error) {
     console.error("[!] Error processing prompt:", error);
@@ -50,3 +65,4 @@ app.post("/api/v1/generateCommand", async (req, res) => {
 app.listen(PORT, () => {
   console.log(`Hades HTTP server listening on http://localhost:${PORT}`);
 });
+
