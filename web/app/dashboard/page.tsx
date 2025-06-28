@@ -56,7 +56,7 @@ export default function Dashboard() {
   const [showNewKeyForm, setShowNewKeyForm] = useState(false);
   const [showGeminiSetup, setShowGeminiSetup] = useState(false);
   const [newKeyName, setNewKeyName] = useState('');
-  const [newKeyType, setNewKeyType] = useState<'hades' | 'gemini'>('hades');
+  const [newKeyType, setNewKeyType] = useState<'hades' | 'gemini'>('gemini');
   const [generatedKey, setGeneratedKey] = useState<string | null>(null);
   const [geminiSetupSteps, setGeminiSetupSteps] = useState<GeminiSetupStep[]>([]);
   const [isSettingUpGemini, setIsSettingUpGemini] = useState(false);
@@ -515,8 +515,8 @@ export default function Dashboard() {
                           onChange={(e) => setNewKeyType(e.target.value as 'hades' | 'gemini')}
                           className="bg-slate-900/50 border border-purple-400/40 text-white rounded-md px-3 py-2"
                         >
+                          <option value="gemini">Gemini API</option>
                           <option value="hades">Hades API</option>
-                          <option value="gemini">Gemini AI</option>
                         </select>
                       </div>
                       
