@@ -365,6 +365,7 @@ export default function Dashboard() {
             <TabsTrigger value="overview" className="data-[state=active]:bg-purple-600">Overview</TabsTrigger>
             <TabsTrigger value="statistics" className="data-[state=active]:bg-purple-600">Statistics</TabsTrigger>
             <TabsTrigger value="api-keys" className="data-[state=active]:bg-purple-600">API Keys</TabsTrigger>
+            <TabsTrigger value="cli-tool" className="data-[state=active]:bg-purple-600">Download CLI Tool</TabsTrigger>
           </TabsList>
 
           <TabsContent value="overview" className="space-y-6">
@@ -787,6 +788,86 @@ export default function Dashboard() {
                         </code>
                       </div>
                     </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="cli-tool" className="space-y-6">
+            <Card className="bg-slate-900/60 backdrop-blur-sm border-purple-400/40">
+              <CardHeader>
+                <CardTitle className="text-white flex items-center">
+                  <Terminal className="h-5 w-5 text-purple-400 mr-2" />
+                  Download CLI Tool
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <p className="text-purple-200 text-sm">
+                  Download the Hades CLI tool to manage your cybersecurity tasks directly from your terminal. Choose your operating system below:
+                </p>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  {/* Windows Download */}
+                  <div className="p-6 bg-slate-950/50 rounded-lg border border-purple-400/20 text-center hover:shadow-lg hover:shadow-purple-500/20 transition-shadow">
+                    <div className="flex justify-center mb-4">
+                      <Image
+                        src="/windows.png"
+                        alt="Windows Logo"
+                        width={48}
+                        height={48}
+                        className="h-12 w-12"
+                      />
+                    </div>
+                    <h4 className="text-white font-semibold mb-2">Windows</h4>
+                    <p className="text-purple-300 text-xs mb-4">Compatible with Windows 10 and above</p>
+                    <Button
+                      className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white w-full"
+                      onClick={() => window.open('/downloads/hades-cli-windows.exe', '_blank')}
+                    >
+                      Download
+                    </Button>
+                  </div>
+
+                  {/* macOS Download */}
+                  <div className="p-6 bg-slate-950/50 rounded-lg border border-purple-400/20 text-center hover:shadow-lg hover:shadow-purple-500/20 transition-shadow">
+                    <div className="flex justify-center mb-4">
+                      <Image
+                        src="/mac.png"
+                        alt="macOS Logo"
+                        width={48}
+                        height={48}
+                        className="h-12 w-12"
+                      />
+                    </div>
+                    <h4 className="text-white font-semibold mb-2">macOS</h4>
+                    <p className="text-purple-300 text-xs mb-4">Compatible with macOS 11.0 and above</p>
+                    <Button
+                      className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white w-full"
+                      onClick={() => window.open('/downloads/hades-cli-macos.zip', '_blank')}
+                    >
+                      Download
+                    </Button>
+                  </div>
+
+                  {/* Linux Download */}
+                  <div className="p-6 bg-slate-950/50 rounded-lg border border-purple-400/20 text-center hover:shadow-lg hover:shadow-purple-500/20 transition-shadow">
+                    <div className="flex justify-center mb-4">
+                      <Image
+                        src="/linux.png"
+                        alt="Linux Logo"
+                        width={48}
+                        height={48}
+                        className="h-12 w-12"
+                      />
+                    </div>
+                    <h4 className="text-white font-semibold mb-2">Linux</h4>
+                    <p className="text-purple-300 text-xs mb-4">Compatible with major Linux distributions</p>
+                    <Button
+                      className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white w-full"
+                      onClick={() => window.open('/downloads/hades-cli-linux.tar.gz', '_blank')}
+                    >
+                      Download
+                    </Button>
                   </div>
                 </div>
               </CardContent>
