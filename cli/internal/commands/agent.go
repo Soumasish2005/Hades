@@ -91,16 +91,15 @@ func (a *Agent) StartInteractive() error {
 	for {
 		fmt.Print("agent> ")
 		if !scanner.Scan() {
+			fmt.Println("Scanner failed to read input")
 			break
 		}
 
 		input := strings.TrimSpace(scanner.Text())
+		
 		if input == "" {
 			continue
 		}
-
-		// Debug: print what we received
-		fmt.Printf("DEBUG: Received input: '%s'\n", input)
 
 		switch strings.ToLower(input) {
 		case "back":
@@ -114,11 +113,8 @@ func (a *Agent) StartInteractive() error {
 			continue
 		}
 
-		// Process the prompt
-		if err := a.processPrompt(input); err != nil {
-			a.ui.PrintError(fmt.Sprintf("Failed to process prompt: %v", err))
-			continue
-		}
+		// Process the prompt - errors are handled inside processPrompt
+		_ = a.processPrompt(input)
 	}
 
 	return nil
@@ -131,7 +127,9 @@ func (a *Agent) processPrompt(prompt string) error {
 	// Step 1: Send prompt to generateCommand API
 	commands, err := a.generateCommands(prompt)
 	if err != nil {
-		return fmt.Errorf("failed to generate commands: %w", err)
+		// Don't return error, just log it and continue
+		a.ui.PrintError(fmt.Sprintf("Failed to generate commands: %v", err))
+		return nil
 	}
 
 	if len(commands) == 0 {
@@ -144,7 +142,9 @@ func (a *Agent) processPrompt(prompt string) error {
 	// Step 2: Execute commands via localhost:3000/execute
 	results, err := a.executeCommands(commands)
 	if err != nil {
-		return fmt.Errorf("failed to execute commands: %w", err)
+		// Don't return error, just log it and continue
+		a.ui.PrintError(fmt.Sprintf("Failed to execute commands: %v", err))
+		return nil
 	}
 
 	// Step 3: Display results
@@ -167,7 +167,11 @@ func (a *Agent) generateCommands(prompt string) ([]string, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
 
-	req, err := http.NewRequestWithContext(ctx, "POST", "http://localhost:8000/api/v1/generateCommand", bytes.NewBuffer(jsonData))
+	url := "http://localhost:8000/api/v1/generateCommand"
+	fmt.Printf("DEBUG: Sending request to: %s\n", url)
+	fmt.Printf("DEBUG: Request body: %s\n", string(jsonData))
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, bytes.NewBuffer(jsonData))
 	if err != nil {
 		return nil, fmt.Errorf("failed to create request: %w", err)
 	}
@@ -177,6 +181,7 @@ func (a *Agent) generateCommands(prompt string) ([]string, error) {
 	client := &http.Client{Timeout: 30 * time.Second}
 	resp, err := client.Do(req)
 	if err != nil {
+		fmt.Printf("DEBUG: HTTP request failed: %v\n", err)
 		return nil, fmt.Errorf("failed to send request: %w", err)
 	}
 	defer resp.Body.Close()
@@ -185,6 +190,9 @@ func (a *Agent) generateCommands(prompt string) ([]string, error) {
 	if err != nil {
 		return nil, fmt.Errorf("failed to read response body: %w", err)
 	}
+
+	fmt.Printf("DEBUG: Response status: %d\n", resp.StatusCode)
+	fmt.Printf("DEBUG: Response body: %s\n", string(body))
 
 	if resp.StatusCode != http.StatusOK {
 		return nil, fmt.Errorf("server returned status %d: %s", resp.StatusCode, string(body))
@@ -199,6 +207,7 @@ func (a *Agent) generateCommands(prompt string) ([]string, error) {
 		return nil, fmt.Errorf("server error: %s", response.Error)
 	}
 
+	fmt.Printf("DEBUG: Generated commands: %v\n", response.Commands)
 	return response.Commands, nil
 }
 
@@ -253,10 +262,12 @@ func (a *Agent) executeCommands(commands []string) ([]CommandResult, error) {
 
 // displayResults shows the command execution results
 func (a *Agent) displayResults(results []CommandResult) {
-	a.ui.PrintInfo("=== Command Execution Results ===")
+	fmt.Println("\n" + strings.Repeat("=", 50))
+	a.ui.PrintInfo("COMMAND EXECUTION RESULTS")
+	fmt.Println(strings.Repeat("=", 50))
 	
 	for i, result := range results {
-		fmt.Printf("\n[%d] Command: %s\n", i+1, result.Command)
+		fmt.Printf("\n[%d] COMMAND: %s\n", i+1, result.Command)
 		fmt.Printf("Exit Code: %d\n", result.ExitCode)
 		
 		if result.Error != "" {
@@ -270,8 +281,11 @@ func (a *Agent) displayResults(results []CommandResult) {
 		}
 		
 		fmt.Printf("Timestamp: %s\n", result.Timestamp)
-		fmt.Println("---")
+		fmt.Println(strings.Repeat("-", 30))
 	}
+	
+	fmt.Println(strings.Repeat("=", 50))
+	fmt.Println()
 }
 
 // showAgentHelp shows help for the agent mode
@@ -317,11 +331,17 @@ func (a *Agent) Start() error {
 			a.mu.Lock()
 			a.status = "error"
 			a.mu.Unlock()
+			fmt.Printf("Server error: %v\n", err)
 		}
 	}()
 
 	// Give server time to start
 	time.Sleep(100 * time.Millisecond)
+
+	// Check if server started successfully
+	if a.status == "error" {
+		return fmt.Errorf("failed to start server on port 3000")
+	}
 
 	return nil
 }
