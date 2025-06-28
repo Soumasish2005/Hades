@@ -39,7 +39,7 @@ Hades/
 │   └── api/
 │       └── routes.py
 ├── web/                     # (Optional) Web ADK frontend
-│   └── (React/Svelte/etc.)
+│   └── (NextJs)
 ├── shared/                  # Shared configs, enums, models
 ├── .env                     # Environment configs
 └── README.md                # You are here
@@ -62,7 +62,7 @@ Hades/
 ### Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/hades.git
+git clone https://github.com/NexorTech/hades.git
 cd hades
 ```
 
