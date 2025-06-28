@@ -61,9 +61,11 @@ func (ui *Interface) ShowHelp() {
 	fmt.Println(ui.colors.Green("clear") + "    - Clear the terminal")
 	fmt.Println(ui.colors.Green("status") + "   - Show server status")
 	fmt.Println(ui.colors.Green("config") + "   - Show current configuration")
+	fmt.Println(ui.colors.Green("agent") + "    - Start interactive agent mode")
 	fmt.Println(ui.colors.Green("exit") + "     - Exit the CLI")
 	fmt.Println(ui.colors.Green("quit") + "     - Exit the CLI")
 	fmt.Println(ui.colors.Yellow("\nExample: Type 'generate' and then enter your prompt"))
+	fmt.Println(ui.colors.Yellow("Example: Type 'agent' to start interactive agent mode"))
 }
 
 // ShowStatus displays the current status

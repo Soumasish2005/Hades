@@ -19,6 +19,7 @@ type Manager struct {
 	config *config.Config
 	ui     *ui.Interface
 	client *APIClient
+	agent  *Agent
 }
 
 // NewManager creates a new command manager
@@ -27,6 +28,7 @@ func NewManager(cfg *config.Config, ui *ui.Interface) *Manager {
 		config: cfg,
 		ui:     ui,
 		client: NewAPIClient(cfg),
+		agent:  NewAgent(cfg, ui),
 	}
 }
 
@@ -43,6 +45,8 @@ func (m *Manager) Execute(command string, args []string) error {
 		return m.handleStatus(args)
 	case "config":
 		return m.handleConfig(args)
+	case "agent":
+		return m.handleAgent(args)
 	case "exit", "quit":
 		return m.handleExit(args)
 	default:
@@ -89,8 +93,34 @@ func (m *Manager) handleConfig(args []string) error {
 	return nil
 }
 
+// handleAgent handles the agent command
+func (m *Manager) handleAgent(args []string) error {
+	if len(args) == 0 {
+		// Start interactive mode
+		return m.agent.StartInteractive()
+	}
+
+	switch args[0] {
+	case "start":
+		return m.agent.StartInteractive()
+	case "stop":
+		return m.agent.Stop()
+	case "status":
+		m.ui.PrintInfo("Agent server status: " + m.agent.GetStatus())
+		return nil
+	default:
+		m.ui.PrintError("Invalid agent command. Use: start, stop, or status")
+		return nil
+	}
+}
+
 // handleExit handles the exit command
 func (m *Manager) handleExit(args []string) error {
+	// Stop agent server if running
+	if m.agent.GetStatus() == "running" {
+		m.agent.Stop()
+	}
+	
 	fmt.Println("Goodbye!")
 	return ExitError{}
 }
