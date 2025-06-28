@@ -8,4 +8,5 @@ fastapi
 uvicorn
 google-generativeai
 google-genai
-
+paramiko
+flask
