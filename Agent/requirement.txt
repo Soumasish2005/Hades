@@ -1,0 +1,11 @@
+google-adk
+google
+bs4 
+selenium
+python-dotenv
+requests
+fastapi
+uvicorn
+google-generativeai
+google-genai
+
