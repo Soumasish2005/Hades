@@ -6,21 +6,15 @@ import { useEffect, useState } from 'react';
 import { 
   Shield, 
   Terminal, 
-  Activity, 
-  AlertTriangle, 
+  Activity,
   CheckCircle, 
-  Target,
   Zap,
-  Brain,
-  Eye,
   Settings,
   LogOut,
   Bell,
   Search,
   Key,
   Copy,
-  TrendingUp,
-  TrendingDown,
   BarChart3,
   Globe,
   Lock,
@@ -39,6 +33,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { logout } from '@/lib/actions/auth';
 import { GeminiSetupService, GeminiSetupStep } from '@/lib/services/gemini-setup';
+import Link from 'next/link';
+import Image from 'next/image';
+
 
 interface APIKey {
   id: string;
@@ -299,8 +296,14 @@ export default function Dashboard() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-4">
-              <Shield className="h-8 w-8 text-purple-400" />
-              <span className="text-xl font-bold text-white">Hades Terminal</span>
+              <Link href="/" className="flex items-center space-x-2 group">
+                <Image
+                  src="/logo-h.png"
+                  alt="Hades Logo"
+                  width={140}
+                  height={48}
+                />
+              </Link>
             </div>
 
             <div className="flex-1 max-w-lg mx-8">
