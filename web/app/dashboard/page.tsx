@@ -8,7 +8,8 @@ import {
   BarChart3,
   Globe,
   Terminal,
-  Zap
+  Zap,
+  Settings
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -64,6 +65,7 @@ export default function Dashboard() {
       <header className="bg-slate-900/90 backdrop-blur-md border-b border-purple-500/30 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
+            {/* Left Section: Logo */}
             <div className="flex items-center space-x-4">
               <Image
                 src="/logo-h.png"
@@ -71,6 +73,47 @@ export default function Dashboard() {
                 width={140}
                 height={48}
               />
+            </div>
+
+            {/* Right Section: User Details, Settings, Logout */}
+            <div className="flex items-center space-x-6">
+              {/* User Details */}
+              <div className="flex items-center space-x-4">
+                {session?.user?.image && (
+                  <Image
+                    src={session.user.image}
+                    alt={`${session.user.name}'s Avatar`}
+                    width={40}
+                    height={40}
+                    className="rounded-full"
+                  />
+                )}
+                <div className="text-right">
+                  <p className="text-white font-medium">{session?.user?.name}</p>
+                  <p className="text-purple-400 text-sm">{session?.user?.email}</p>
+                </div>
+              </div>
+
+              {/* Settings Icon */}
+              <button
+                className="p-2 rounded-full bg-slate-800 hover:bg-purple-700 transition-colors duration-200"
+                onClick={() => router.push('/settings')}
+                title="Settings"
+                aria-label="Settings"
+              >
+                <Settings className="h-6 w-6 text-purple-400 hover:text-white transition-colors duration-200" />
+              </button>
+
+              {/* Logout Button */}
+              <button
+                className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-md"
+                onClick={() => {
+                  // Add logout functionality here
+                  router.push('/signin');
+                }}
+              >
+                Logout
+              </button>
             </div>
           </div>
         </div>
@@ -301,9 +344,20 @@ export default function Dashboard() {
                 </div>
                 <div className="mt-4">
                   <h4 className="text-white font-medium mb-2">API Keys List:</h4>
-                  <ul className="list-disc list-inside text-purple-200">
+                  <ul className="space-y-2">
                     {apiKeys.map((key, index) => (
-                      <li key={index}>{key}</li>
+                      <li
+                        key={index}
+                        className="flex items-center justify-between bg-slate-950/50 p-4 rounded-lg border border-purple-400/20"
+                      >
+                        <span className="text-purple-300 font-mono">**** **** **** {key.slice(-4)}</span>
+                        <button
+                          className="bg-purple-600 hover:bg-purple-700 text-white px-3 py-1 rounded-md text-sm"
+                          onClick={() => navigator.clipboard.writeText(key)}
+                        >
+                          Copy
+                        </button>
+                      </li>
                     ))}
                   </ul>
                 </div>
