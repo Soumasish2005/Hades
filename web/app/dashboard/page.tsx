@@ -9,7 +9,8 @@ import {
   Globe,
   Terminal,
   Zap,
-  Settings
+  Settings,
+  Zap
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -358,6 +359,9 @@ export default function Dashboard() {
                           Copy
                         </button>
                       </li>
+                  <ul className="list-disc list-inside text-purple-200">
+                    {apiKeys.map((key, index) => (
+                      <li key={index}>{key}</li>
                     ))}
                   </ul>
                 </div>
