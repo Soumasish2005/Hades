@@ -1,0 +1,4 @@
+[build]
+base = "web"
+publish = "dist"    # or your build output folder
+command = "npm run build"   # adjust to your build command
