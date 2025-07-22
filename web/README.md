@@ -2,6 +2,8 @@
 
 The Hades Web Interface is a modern, responsive React application that serves as the frontend for the Hades cybersecurity automation platform. Built with React, TypeScript, and Tailwind CSS, it provides an intuitive user interface for interacting with Hades AI agents and managing cybersecurity workflows.
 
+🌐 **Live Demo**: [https://hades.nexortech.dev/](https://hades.nexortech.dev/)
+
 ## Features
 
 - **Landing Page**: Modern cybersecurity-themed landing page showcasing Hades capabilities
@@ -146,6 +148,11 @@ The web interface communicates with the Hades Agent backend through:
 - Use React.memo() for expensive components
 
 ## Deployment
+
+### Live Website
+
+The Hades Web Interface is currently deployed and accessible at:
+**[https://hades.nexortech.dev/](https://hades.nexortech.dev/)**
 
 ### Production Build
 
