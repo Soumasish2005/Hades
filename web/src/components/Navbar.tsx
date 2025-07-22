@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Menu, X, Shield } from 'lucide-react'
+import AuthButton from './AuthButton'
+import { useAuth } from '../hooks/useAuth'
 
 const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const { user } = useAuth()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -49,13 +52,8 @@ const Navbar: React.FC = () => {
         </div>
 
         {/* CTA Button */}
-        <div className="hidden md:block">
-          <Link
-            to="/chat"
-            className="bg-gradient-purple text-white px-6 py-2 rounded-full text-sm font-medium hover:opacity-90 transition-opacity"
-          >
-            Try Hades AI
-          </Link>
+        <div className="hidden md:flex items-center gap-4">
+          <AuthButton variant="navbar" />
         </div>
 
         {/* Mobile Menu Button */}
@@ -81,13 +79,9 @@ const Navbar: React.FC = () => {
                 {item.name}
               </a>
             ))}
-            <Link
-              to="/chat"
-              className="bg-gradient-purple text-white px-6 py-2 rounded-full text-sm font-medium text-center hover:opacity-90 transition-opacity"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              Try Hades AI
-            </Link>
+            <div className="pt-4 border-t border-gray-700">
+              <AuthButton variant="page" />
+            </div>
           </div>
         </div>
       )}

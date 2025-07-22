@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowLeft, Send, Bot, User, Plus, MessageSquare, Shield, Settings, Menu, X } from 'lucide-react'
+import { useAuth } from '../hooks/useAuth'
+import AuthButton from '../components/AuthButton'
 
 interface Message {
   id: number
@@ -23,6 +25,7 @@ const ChatInterface: React.FC = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
+  const { user } = useAuth()
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -127,6 +130,7 @@ const ChatInterface: React.FC = () => {
 
           {/* Sidebar Footer */}
           <div className="p-4 border-t border-gray-700">
+            {user && <AuthButton variant="page" className="mb-4" />}
             <Link
               to="/"
               className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors text-sm mb-3"
@@ -134,6 +138,15 @@ const ChatInterface: React.FC = () => {
               <ArrowLeft size={16} />
               Back to Hades
             </Link>
+            {!user && (
+              <Link
+                to="/login"
+                className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors text-sm mb-3"
+              >
+                <Shield size={16} />
+                Sign In
+              </Link>
+            )}
             <button className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors text-sm">
               <Settings size={16} />
               Settings

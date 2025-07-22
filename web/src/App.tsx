@@ -2,12 +2,15 @@ import React from 'react'
 import { Routes, Route } from 'react-router-dom'
 import LandingPage from './pages/LandingPage'
 import ChatInterface from './pages/ChatInterface'
+import LoginPage from './pages/LoginPage'
 
 function App() {
   return (
     <div className="min-h-screen">
       <Routes>
         <Route path="/" element={<LandingPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/login" element={<LoginPage />} />
         <Route path="/chat" element={<ChatInterface />} />
       </Routes>
     </div>

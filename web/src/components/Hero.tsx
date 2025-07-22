@@ -46,10 +46,13 @@ const Hero: React.FC = () => {
               <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
             </Link>
             
-            <button className="glass text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-white hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center gap-2">
+            <Link
+              to="/login"
+              className="glass text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-white hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center gap-2"
+            >
               <Play size={20} />
               Watch Demo
-            </button>
+            </Link>
           </div>
 
           <div className="flex items-center justify-center lg:justify-start gap-8 pt-8">
