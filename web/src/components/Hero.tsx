@@ -1,8 +1,11 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowRight, Play, Shield, Lock, Zap } from 'lucide-react'
+import { useAuth } from '../hooks/useAuth'
 
 const Hero: React.FC = () => {
+  const { user } = useAuth()
+
   return (
     <section className="min-h-screen flex items-center justify-center px-4 pt-32">
       {/* Background particles */}

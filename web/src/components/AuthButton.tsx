@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { User, LogOut, Github } from 'lucide-react'
 import { useAuth } from '../hooks/useAuth'
 import { signInWithGoogle, signInWithGitHub, signOut } from '../lib/firebase'
@@ -10,13 +11,17 @@ interface AuthButtonProps {
 
 const AuthButton: React.FC<AuthButtonProps> = ({ variant = 'navbar', className = '' }) => {
   const { user, loading } = useAuth()
+  const navigate = useNavigate()
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const [authLoading, setAuthLoading] = useState(false)
 
   const handleGoogleSignIn = async () => {
     setAuthLoading(true)
     try {
-      await signInWithGoogle()
+      const result = await signInWithGoogle()
+      if (result.user) {
+        navigate('/chat')
+      }
     } catch (error) {
       console.error('Google sign in error:', error)
     } finally {
@@ -27,7 +32,10 @@ const AuthButton: React.FC<AuthButtonProps> = ({ variant = 'navbar', className =
   const handleGitHubSignIn = async () => {
     setAuthLoading(true)
     try {
-      await signInWithGitHub()
+      const result = await signInWithGitHub()
+      if (result.user) {
+        navigate('/chat')
+      }
     } catch (error) {
       console.error('GitHub sign in error:', error)
     } finally {
@@ -40,6 +48,7 @@ const AuthButton: React.FC<AuthButtonProps> = ({ variant = 'navbar', className =
     try {
       await signOut()
       setIsDropdownOpen(false)
+      navigate('/')
     } catch (error) {
       console.error('Sign out error:', error)
     } finally {
@@ -75,10 +84,10 @@ const AuthButton: React.FC<AuthButtonProps> = ({ variant = 'navbar', className =
           {isDropdownOpen && (
             <div className="absolute right-0 mt-2 w-48 glass rounded-lg shadow-lg border border-gray-600 z-50">
               <div className="p-3 border-b border-gray-600">
-                <div className="text-white text-sm font-medium truncate">
+                <div className="text-white text-sm font-medium break-words">
                   {user.displayName || user.email}
                 </div>
-                <div className="text-gray-400 text-xs truncate">{user.email}</div>
+                <div className="text-gray-400 text-xs break-words">{user.email}</div>
               </div>
               <button
                 onClick={handleSignOut}
@@ -108,10 +117,10 @@ const AuthButton: React.FC<AuthButtonProps> = ({ variant = 'navbar', className =
           </div>
         )}
         <div className="flex-1">
-          <div className="text-white font-medium">
+          <div className="text-white font-medium break-words">
             {user.displayName || 'User'}
           </div>
-          <div className="text-gray-400 text-sm">{user.email}</div>
+          <div className="text-gray-400 text-sm break-words">{user.email}</div>
         </div>
         <button
           onClick={handleSignOut}

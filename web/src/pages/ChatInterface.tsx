@@ -139,13 +139,9 @@ const ChatInterface: React.FC = () => {
               Back to Hades
             </Link>
             {!user && (
-              <Link
-                to="/login"
-                className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors text-sm mb-3"
-              >
-                <Shield size={16} />
-                Sign In
-              </Link>
+              <div className="mb-3">
+                <AuthButton variant="page" />
+              </div>
             )}
             <button className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors text-sm">
               <Settings size={16} />
@@ -296,6 +292,8 @@ const ChatInterface: React.FC = () => {
                 onClick={sendMessage}
                 disabled={!inputValue.trim() || isLoading}
                 className="absolute right-3 bottom-3 w-8 h-8 bg-cyber-purple disabled:bg-gray-600 text-white rounded-full hover:bg-opacity-80 transition-all flex items-center justify-center disabled:cursor-not-allowed"
+                title="Send message"
+                aria-label="Send message"
               >
                 <Send size={16} />
               </button>
