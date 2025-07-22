@@ -39,7 +39,7 @@ Hades/
 │   └── api/
 │       └── routes.py
 ├── web/                     # (Optional) Web ADK frontend
-│   └── (NextJs)
+│   └── (ReactJs)
 ├── shared/                  # Shared configs, enums, models
 ├── .env                     # Environment configs
 └── README.md                # You are here
